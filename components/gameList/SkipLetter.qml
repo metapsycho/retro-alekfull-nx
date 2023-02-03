@@ -31,6 +31,7 @@ Item {
             color: theme.current.detailsColor;
 
             font {
+                family: sansFont.name;
                 pixelSize: root.height * .2;
                 bold: true;
             }

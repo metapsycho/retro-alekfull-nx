@@ -18,8 +18,10 @@ Rectangle {
             - headerTitle.anchors.leftMargin;
     }
 
-    color: 'transparent';
-    height: root.height * .115 * theme.fontScale;
+    //color: 'transparent';
+    color: theme.current.bgColor;
+    //height: root.height * .115 * theme.fontScale;
+    height: root.height * .090 * theme.fontScale;
 
     anchors {
         left: parent.left;
@@ -63,6 +65,7 @@ Rectangle {
         }
 
         font {
+            family: serifFont.name;
             pixelSize: parent.height * .33;
             letterSpacing: -0.3;
             bold: true;
@@ -72,7 +75,7 @@ Rectangle {
     Row {
         id: headerWidgets;
 
-        property string shade: parent.shade;
+        property string shade: parent.parent.shade;
         spacing: parent.height * .30;
         height: parent.height;
 

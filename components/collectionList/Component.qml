@@ -86,7 +86,7 @@ Item {
         id: collectionScroll;
 
         anchors {
-            top: parent.top;
+            top: collectionListHeader.bottom;
             bottom: collectionListFooter.top;
             left: parent.left;
             right: parent.right;
@@ -113,6 +113,7 @@ Item {
     }
 
     Header.Component {
+        id: collectionListHeader;
         showDivider: false;
         shade: 'light';
     }

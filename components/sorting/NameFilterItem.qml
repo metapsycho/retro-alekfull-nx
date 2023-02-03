@@ -2,8 +2,8 @@ import QtQuick 2.15
 
 Item {
     property string nameFilterText: {
-        if (nameFilter === '') return 'Name: (no filter)';
-        return 'Name: ' + nameFilter;
+        if (nameFilter === '') return '(no filter)';
+        return nameFilter;
     }
 
     MouseArea {
@@ -52,6 +52,7 @@ Item {
         height: parent.height;
 
         font {
+            family: sansFont.name;
             pixelSize: parent.height * .43;
             letterSpacing: -0.3;
             bold: true;

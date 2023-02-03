@@ -41,6 +41,7 @@ Item {
         height: parent.height;
 
         font {
+            family: serifFont.name;
             pixelSize: parent.height * .43;
             letterSpacing: -0.3;
             bold: true;

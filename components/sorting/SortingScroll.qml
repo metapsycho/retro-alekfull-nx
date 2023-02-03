@@ -4,7 +4,7 @@ import Qt.labs.qmlmodels 1.0
 Item {
     property alias sortingListView: sortingListView;
     property double itemHeight: {
-        return sortingListView.height * .16 * theme.fontScale;
+        return sortingListView.height * .10 * theme.fontScale;
     }
 
     Component.onCompleted: {

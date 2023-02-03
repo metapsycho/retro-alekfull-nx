@@ -23,28 +23,28 @@ Item {
 
         let time = Math.floor((now - lastPlayed) / 1000);
         if (time < 60) {
-            return 'Played ' + time + ' seconds ago';
+            return 'played ' + time + ' seconds ago';
         }
 
         time = Math.floor(time / 60);
         if (time < 60) {
-            return 'Played ' + time + ' minutes ago';
+            return 'played ' + time + ' minutes ago';
         }
 
         time = Math.floor(time / 60);
         if (time < 24) {
-            return 'Played ' + time + ' hours ago';
+            return 'played ' + time + ' hours ago';
         }
 
         time = Math.floor(time / 24);
-        return 'Played ' + time + ' days ago';
+        return 'played ' + time + ' days ago';
     }
 
     property string releaseDateText: {
         if (currentGame === null) return '';
         if (!currentGame.releaseYear) return '';
 
-        return 'Released ' + currentGame.releaseYear;
+        return 'released ' + currentGame.releaseYear;
     }
 
     property string playersText: {
@@ -78,11 +78,11 @@ Item {
         if (currentGame === null) return '';
 
         if (currentGame.developer) {
-            return 'Dev\'d by ' + currentGame.developer;
+            return 'developed by ' + currentGame.developer;
         }
 
         if (currentGame.publisher) {
-            return 'Pub\'d by ' + currentGame.publisher;
+            return 'published by ' + currentGame.publisher;
         }
 
         return '';

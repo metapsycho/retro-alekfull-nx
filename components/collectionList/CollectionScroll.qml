@@ -9,7 +9,7 @@ Item {
         collectionListView.currentIndex = currentCollectionIndex;
         collectionListView.positionViewAtIndex(currentCollectionIndex, ListView.Center);
 
-        backgroundColor.color = collectionData.getColor(currentShortName);
+        //backgroundColor.color = collectionData.getColor(currentShortName);
         muteStartup = false;
     }
 
@@ -20,32 +20,18 @@ Item {
     }
 
     // background color, fades when collection changes
-    Rectangle {
-        id: backgroundColor;
-
-        width: parent.width;
-        height: parent.height;
-        color: collectionData.getColor(currentShortName);
-        opacity: theme.current.bgOpacity;
-
-        Behavior on color {
-            ColorAnimation { duration: 335; easing.type: Easing.InOutQuad; }
-        }
-    }
-
-    // dots
-    PageIndicator {
-        currentIndex: collectionListView.currentIndex;
-        pageCount: collectionCount;
-        width: parent.width * .85;
-        height: parent.height * .01;
-
-        anchors {
-            horizontalCenter: parent.horizontalCenter;
-            bottom: parent.bottom;
-            bottomMargin: 25;
-        }
-    }
+//    Rectangle {
+//        id: backgroundColor;
+//
+//        width: parent.width;
+//        height: parent.height;
+//        color: collectionData.getColor(currentShortName);
+//        opacity: theme.current.bgOpacity;
+//
+//        Behavior on color {
+//            ColorAnimation { duration: 335; easing.type: Easing.InOutQuad; }
+//        }
+//    }
 
     ListView {
         id: collectionListView;
@@ -59,7 +45,8 @@ Item {
         snapMode: ListView.SnapToItem;
         highlightMoveDuration: 225;
         highlightMoveVelocity: -1;
-        spacing: 50;
+        //spacing: 50;
+        spacing: 0;
         anchors.fill: parent;
 
         onCurrentIndexChanged: {
@@ -68,7 +55,7 @@ Item {
                 if (updated && !muteStartup) sounds.nav();
             }
 
-            backgroundColor.color = collectionData.getColor(currentShortName);
+            //backgroundColor.color = collectionData.getColor(currentShortName);
         }
     }
 
@@ -78,6 +65,22 @@ Item {
         CollectionItem {
             width: collectionListView.width;
             height: collectionListView.height;
+        }
+    }
+
+    // dots
+    PageIndicator {
+        currentIndex: collectionListView.currentIndex;
+        pageCount: collectionCount;
+        width: parent.width * .65;
+        height: parent.height * .01;
+
+        anchors {
+            //horizontalCenter: parent.horizontalCenter;
+            bottom: parent.bottom;
+            bottomMargin: 25;
+            right: parent.right;
+            rightMargin: 25;
         }
     }
 }

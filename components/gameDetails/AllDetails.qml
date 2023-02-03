@@ -1,10 +1,14 @@
 import QtQuick 2.15
 import QtGraphicalEffects 1.12
+import QtQuick.Layouts 1.15
 
 import '../media' as Media
 
 Item {
+    id: allDetails;
+
     property alias video: gameDetailsVideo;
+    property double actionButtonHeight: allDetails.height * 0.09;
 
     // get rid of newlines for the short description
     // also some weird kerning on periods and commas for some reason
@@ -24,10 +28,28 @@ Item {
         return false;
     }
 
-    property string imgSrc: {
+    property string boxFrontSrc: {
+        if (currentGame === null) return '';
+        return currentGame.assets.boxFront;
+    }
+
+    property string screenshotSrc: {
         if (currentGame === null) return '';
         return currentGame.assets.screenshot;
     }
+
+    property string logoSrc: {
+        if (currentGame === null) return '';
+        return currentGame.assets.logo;
+    }
+
+    property string favoriteGlyph: {
+        if (currentGame === null) return '';
+        if (currentGame.favorite) return glyphs.favorite;
+        return glyphs.unfavorite;
+    }
+
+    property double textSize: root.height * 0.055 * theme.fontScale;
 
     Component.onCompleted: {
         gameDetailsVideo.switchVideo();
@@ -36,120 +58,216 @@ Item {
         });
     }
 
-    GameMetadata {
-        width: parent.width / 2 - 50;
-        pixelSize: parent.height * .055;
+    Row {
+        anchors.fill: parent;
 
-        anchors {
-            top: parent.top;
-            topMargin: 25;
-            bottom: detailsDivider.top;
-            bottomMargin: parent.height * .035;
-            left: parent.left;
-            leftMargin: 25;
-        }
-    }
+        Rectangle {
+            id: sectionMedia;
 
-    Media.GameImage {
-        id: gameDetailsScreenshot;
+            width: parent.width / 2.5;
+            height: parent.height;
+            anchors.verticalCenter: parent.verticalCenter;
+            color: theme.current.bgColorSecondary;
 
-        width: parent.width / 2;
-        height: parent.height * .675;
-        x: parent.width / 2;
-        imageSource: imgSrc;
-    }
+            Rectangle {
+                anchors {
+                    leftMargin: 20;
+                    rightMargin: 20;
+                    topMargin: 40;
+                    bottomMargin: 40;
+                }
+                anchors.fill: parent;
+                color: 'transparent';
 
-    Media.GameVideo {
-        id: gameDetailsVideo;
+                Rectangle {
+                    anchors.fill: parent;
+                    color: 'transparent';
 
-        width: parent.width / 2;
-        height: parent.height * .675;
-        x: parent.width / 2;
-        settingKey: 'gameDetailsVideo';
-        validView: 'gameDetails';
+                    Rectangle {
+                        id: sectionScreen;
+                        width: Math.min(parent.width, parent.height - actionButtonHeight - 10);
+                        height: width;
+                        anchors {
+                            left: parent.left;
+                            right: parent.right;
+                            top: parent.top;
+                        }
+                        color: 'transparent';
 
-        onVideoToggled: {
-            gameDetailsScreenshot.videoPlaying = videoPlaying;
-        }
-    }
+                        Media.GameImage {
+                            id: gameDetailsScreenshot;
 
-    Text {
-        text: gameData.ratingText;
-        color: theme.current.detailsColor;
-        opacity: 0.5;
-        width: parent.width / 2;
-        height: parent.height * .65;
-        x: parent.width / 2;
-        verticalAlignment: Text.AlignBottom;
-        horizontalAlignment: Text.AlignHCenter;
+                            anchors.fill: parent;
+                            imageSource: screenshotSrc;
+                        }
 
-        font {
-            family: glyphs.name;
-            pixelSize: parent.height * .04;
-        }
-    }
+                        Media.GameVideo {
+                            id: gameDetailsVideo;
 
-    Rectangle {
-        id: detailsDivider;
+                            anchors.fill: parent;
+                            settingKey: 'gameDetailsVideo';
+                            validView: 'gameDetails';
+                            quickPlay: true;
 
-        height: 1;
-        color: theme.current.dividerColor;
+                            onVideoToggled: {
+                                gameDetailsScreenshot.videoPlaying = videoPlaying;
+                                gameDetailsLogo.visible = videoPlaying;
+                            }
+                        }
 
-        anchors {
-            top: gameDetailsScreenshot.bottom;
-            left: parent.left;
-            leftMargin: 22;
-            right: parent.right;
-            rightMargin: 22;
-        }
-    }
+                        Image {
+                            id: gameDetailsLogo;
 
-    Text {
-        id: introDesc;
+                            visible: false;
+                            width: parent.width * .5;
+                            height: parent.height * .5;
+                            anchors {
+                                right: parent.right;
+                                bottom: parent.bottom;
+                            }
+                            fillMode: Image.PreserveAspectFit;
+                            source: logoSrc;
+                        }
+                    }
 
-        text: introDescText;
-        wrapMode: Text.WordWrap;
-        horizontalAlignment: Text.AlignJustify;
-        verticalAlignment: Text.AlignVCenter;
-        color: theme.current.detailsColor;
-        lineHeight: 1.3;
-        elide: Text.ElideRight;
+                    RowLayout {
+                        id: sectionBottons;
+                        width: parent.width;
+                        height: actionButtonHeight;
+                        anchors {
+                            left: parent.left;
+                            right: parent.right;
+                            bottom: parent.bottom;
+                        }
+                        spacing: parent.width * 0.075;
 
-        font {
-            pixelSize: parent.height * .04 * theme.fontScale;
-            letterSpacing: -0.1;
-            bold: true;
-        }
+                        ActionButton {
+                            id: playButton;
 
-        anchors {
-            top: detailsDivider.bottom;
-            topMargin: 10;
-            bottom: parent.bottom;
-            bottomMargin: 10;
-            left: parent.left;
-            leftMargin: 30;
-            right: parent.right;
-            rightMargin: 30;
-        }
+                            Layout.alignment: Qt.AlignCenter;
+                            Layout.preferredWidth: 180;
+                            Layout.fillHeight: true;
 
-        MouseArea {
-            anchors.fill: parent;
+                            glyph: glyphs.play;
 
-            onClicked: {
-                detailsButtonClicked('more');
+                            MouseArea {
+                                anchors.fill: parent;
+
+                                onClicked: {
+                                    detailsButtonClicked('play');
+                                }
+                            }
+                        }
+
+                        ActionButton {
+                            id: favoriteButton;
+
+                            Layout.alignment: Qt.AlignCenter;
+                            Layout.preferredWidth: 180;
+                            Layout.fillHeight: true;
+
+                            glyph: favoriteGlyph;
+
+                            MouseArea {
+                                anchors.fill: parent;
+
+                                onClicked: {
+                                    detailsButtonClicked('favorite');
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
-    }
 
-    MoreButton {
-        pixelSize: parent.height * .04 * theme.fontScale;
-        visible: hasMoreButton;
+        Rectangle {
+            width: parent.width - sectionMedia.width;
+            height: parent.height;
+            anchors.verticalCenter: parent.verticalCenter;
+            color: theme.current.bgColor;
 
-        anchors {
-            right: parent.right;
-            rightMargin: 30;
-            bottom: introDesc.bottom;
-            bottomMargin: parent.height * .01;
+            Rectangle {
+                anchors.fill: parent;
+                anchors.margins: 30;
+                color: 'transparent';
+
+                Rectangle {
+                    anchors.fill: parent;
+                    color: 'transparent';
+
+                    GameMetadata {
+                        id: gameMetaData;
+
+                        width: parent.width;
+                        height: parent.height * .5 - 0.5;
+                        anchors {
+                            top: parent.top;
+                            left: parent.left;
+                        }
+                    }
+
+                    // divider
+                    Rectangle {
+                        width: parent.width;
+                        height: 1;
+                        anchors.centerIn: parent;
+
+                        color: theme.current.dividerColor;
+                    }
+
+                    Rectangle {
+                        id: sectionIntro;
+                        color: 'transparent';
+
+                        width: parent.width;
+                        height: parent.height * .5 - 0.5;
+                        anchors {
+                            bottom: parent.bottom;
+                            left: parent.left;
+                        }
+
+                        Text {
+                            id: introDesc;
+
+                            anchors.fill: parent;
+
+                            text: introDescText;
+                            wrapMode: Text.WordWrap;
+                            horizontalAlignment: Text.AlignJustify;
+                            verticalAlignment: Text.AlignTop;
+                            color: theme.current.detailsColor;
+                            lineHeight: 1.1;
+                            elide: Text.ElideRight;
+
+                            font {
+                                family: serifFont.name;
+                                pixelSize: textSize * 0.5;
+                                letterSpacing: -0.1;
+                                bold: true;
+                            }
+
+                            MouseArea {
+                                anchors.fill: parent;
+
+                                onClicked: {
+                                    detailsButtonClicked('more');
+                                }
+                            }
+                        }
+
+                        MoreButton {
+                            pixelSize: textSize * 0.52;
+                            visible: hasMoreButton;
+
+                            anchors {
+                                right: introDesc.right;
+                                bottom: introDesc.bottom;
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

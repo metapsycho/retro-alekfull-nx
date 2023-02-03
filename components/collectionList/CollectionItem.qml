@@ -11,17 +11,18 @@ Item {
         }
     }
 
-    // background stripe
     Image {
-        source: '../../assets/images/stripe.png';
-        fillMode: Image.PreserveAspectFit;
-        horizontalAlignment: Image.AlignRight;
+        id: bgImage;
 
+        source: '../../assets/images/devices/' + collectionData.getImage(modelData.shortName) + '.jpg';
+        fillMode: Image.PreserveAspectCrop;
         anchors {
-            fill: parent;
-            rightMargin: 70;
+            top: parent.top;
+            left: parent.left;
+            right: parent.right;
         }
     }
+
 
     DropShadow {
         source: title;
@@ -43,19 +44,22 @@ Item {
         lineHeight: 0.8;
 
         font {
+            family: serifFont.name;
             pixelSize: root.height * .075;
             bold: true;
         }
 
         anchors {
-            verticalCenter: parent.verticalCenter;
             left: parent.left;
             leftMargin: 30;
-            verticalCenterOffset: -5;
+            bottom: gameCount.top;
+            bottomMargin: root.height * .02;
         }
     }
 
     Text {
+        id: gameCount;
+
         text: filteredGamesCollection.count + ' games';
         color: theme.current.titleColor;
         opacity: 0.7;
@@ -63,11 +67,12 @@ Item {
         anchors {
             left: parent.left;
             leftMargin: 30;
-            top: title.bottom;
-            topMargin: root.height * .02;
+            bottom: parent.bottom;
+            bottomMargin: root.height * .02;
         }
 
         font {
+            family: sansFont.name;
             pixelSize: root.height * .03;
             letterSpacing: -0.3;
             bold: true;
@@ -91,6 +96,7 @@ Item {
         opacity: 0.7;
 
         font {
+            family: serifFont.name;
             capitalization: Font.AllUppercase;
             pixelSize: root.height * .025;
             letterSpacing: 1.3;
@@ -103,34 +109,4 @@ Item {
             bottom: title.top;
         }
     }
-
-    Image {
-        id: device;
-
-        source: '../../assets/images/devices/' + collectionData.getImage(modelData.shortName) + '.png';
-        width: root.width * .50;
-        height: root.height * .65;
-        fillMode: Image.PreserveAspectFit;
-        horizontalAlignment: Image.AlignHCenter;
-        asynchronous: true;
-        smooth: true;
-        visible: true;
-
-        anchors {
-            verticalCenter: parent.verticalCenter;
-            verticalCenterOffset: 10;
-            right: parent.right;
-            rightMargin: root.width * .02;
-        }
-    }
-
-    // DropShadow {
-    //     source: device;
-    //     verticalOffset: 10;
-    //     color: '#30000000';
-    //     radius: 20;
-    //     samples: 41;
-    //     cached: true;
-    //     anchors.fill: device;
-    // }
 }

@@ -241,9 +241,18 @@ FocusScope {
         property string search: '\ue806';
         property string cancel: '\ue807';
 
-        source: "assets/images/fontello.ttf";
+        source: "assets/font/symbol.ttf";
     }
 
+    FontLoader {
+        id: sansFont; 
+        source: "assets/font/NotoSansSC-Regular.otf";
+    }
+
+    FontLoader {
+        id: serifFont;
+        source: "assets/font/NotoSerifSC-Regular.otf";
+    }
 
     // ui components
     CollectionList.Component {
@@ -261,8 +270,13 @@ FocusScope {
     }
 
     GameDetails.Component {
-        visible: currentView === 'gameDetails';
+        id: gameDetails;
+
+        //visible: currentView === 'gameDetails';
+        visible: false;
+        show: currentView === 'gameDetails';
         focus: currentView === 'gameDetails';
+        blurBg: gameList;
     }
 
     Settings.Component {
@@ -282,6 +296,7 @@ FocusScope {
 
         visible: currentView === 'attract';
         focus: currentView === 'attract';
+        blurBg: collectionList;
     }
 
     /* Text { id: debug; x: 20; y: 20; width: 20; height: 20; text: 'debug'; color: 'magenta'; } */

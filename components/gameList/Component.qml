@@ -85,7 +85,8 @@ Item {
 
         if (api.keys.isFilters(event)) {
             event.accepted = true;
-            onFiltersPressed();
+            // onFiltersPressed();
+            onFavoritePressed();
         }
 
         // L1
@@ -162,7 +163,8 @@ Item {
         //L2
         if (api.keys.isPageUp(event)) {
             event.accepted = true;
-            onFavoritePressed();
+            // onFavoritePressed();
+            onFiltersPressed();
         }
     }
 
@@ -194,8 +196,8 @@ Item {
             { title: 'Play', key: theme.buttonGuide.accept, square: false, sigValue: 'accept' },
             { title: 'Back', key: theme.buttonGuide.cancel, square: false, sigValue: 'cancel' },
             { title: 'Details', key: theme.buttonGuide.details, square: false, sigValue: 'details' },
-            { title: 'Random', key: theme.buttonGuide.filters, square: false, sigValue: 'filters' },
-            { title: 'Favorite', visible: !onlyFavorites, key: theme.buttonGuide.pageUp, square: true, sigValue: 'favorite' }
+            { title: 'Favorite', visible: !onlyFavorites, key: theme.buttonGuide.filters, square: false, sigValue: 'favorite' },
+            { title: 'Random', key: theme.buttonGuide.pageUp, square: true, sigValue: 'filters' }
         ];
 
         onFooterButtonClicked: {

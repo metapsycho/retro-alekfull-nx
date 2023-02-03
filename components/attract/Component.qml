@@ -1,10 +1,12 @@
 import QtQuick 2.15
 import QtMultimedia 5.9
 import SortFilterProxyModel 0.2
+import QtGraphicalEffects 1.12
 
 Item {
     property bool showTitle: true;
     property var currentAttractGame;
+    property var blurBg;
 
     anchors.fill: parent;
 
@@ -120,21 +122,38 @@ Item {
         }
     }
 
-    Video {
-        id: attractPlayer;
+    Rectangle {
+        color: theme.current.detailsBlurColor;
+        anchors.fill: parent
 
-        volume: 0.7;
-        fillMode: VideoOutput.PreserveAspectFit;
-        anchors.fill: parent;
-        autoPlay: true;
+        FastBlur {
+            width: blurBg.width;
+            height: blurBg.height;
+            anchors.centerIn: blurBg;
+            radius: 40;
+            opacity: .4;
+            source: blurBg;
+            cached: false;
+        }
 
-        onStatusChanged: {
-            if (status === MediaPlayer.InvalidMedia) {
-                nextVideo();
-            }
+        Video {
+            id: attractPlayer;
 
-            if (status === MediaPlayer.EndOfMedia) {
-                nextVideo();
+            volume: 0.7;
+            fillMode: VideoOutput.PreserveAspectFit;
+            anchors.centerIn: parent;
+            autoPlay: true;
+            width: Math.min(parent.width, parent.height) * .7;
+            height: Math.min(parent.width, parent.height) * .7;
+
+            onStatusChanged: {
+                if (status === MediaPlayer.InvalidMedia) {
+                    nextVideo();
+                }
+
+                if (status === MediaPlayer.EndOfMedia) {
+                    nextVideo();
+                }
             }
         }
     }
@@ -154,6 +173,7 @@ Item {
         opacity: .6;
 
         font {
+            family: serifFont.name;
             pixelSize: root.height * .06;
             bold: true;
         }
@@ -183,6 +203,7 @@ Item {
         opacity: .6;
 
         font {
+            family: serifFont.name;
             pixelSize: root.height * .06;
             bold: true;
         }

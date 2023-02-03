@@ -42,7 +42,7 @@ Item {
 
         font {
             family: glyphs.name;
-            pixelSize: parent.height * .43;
+            pixelSize: parent.height * .32;
         }
 
         anchors {
@@ -62,7 +62,8 @@ Item {
         height: parent.height;
 
         font {
-            pixelSize: parent.height * .43;
+            family: serifFont.name;
+            pixelSize: parent.height * .32;
             letterSpacing: -0.3;
             bold: true;
         }

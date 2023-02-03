@@ -30,6 +30,7 @@ Item {
             color: theme.current.buttonLetterColor;
 
             font {
+                family: sansFont.name;
                 pixelSize: fontSize;
                 letterSpacing: -0.3;
                 bold: true;
@@ -50,6 +51,7 @@ Item {
         color: theme.current.buttonLabelColor;
 
         font {
+            family: sansFont.name;
             pixelSize: fontSize;
             letterSpacing: -0.3;
             bold: true;

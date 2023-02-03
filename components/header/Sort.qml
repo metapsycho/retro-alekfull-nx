@@ -73,6 +73,7 @@ Item {
                 }
 
                 font {
+                    family: sansFont.name;
                     pixelSize: parent.height * .6;
                     letterSpacing: -0.3;
                     bold: true;
@@ -115,6 +116,7 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter;
 
                 font {
+                    family: sansFont.name;
                     pixelSize: parent.height * .7;
                     letterSpacing: -0.3;
                     bold: true;

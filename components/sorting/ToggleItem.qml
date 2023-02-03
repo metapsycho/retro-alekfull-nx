@@ -56,6 +56,7 @@ Item {
         height: parent.height;
 
         font {
+            family: sansFont.name;
             pixelSize: parent.height * .43;
             letterSpacing: -0.3;
             bold: true;

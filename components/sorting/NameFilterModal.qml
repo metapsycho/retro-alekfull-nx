@@ -51,6 +51,7 @@ Item {
             color: theme.current.defaultHeaderNameColor
 
             font {
+                family: sansFont.name;
                 pixelSize: parent.height * .11;
                 letterSpacing: -0.3;
                 bold: true;
@@ -107,6 +108,7 @@ Item {
                 }
 
                 font {
+                    family: sansFont.name;
                     pixelSize: parent.height * .6;
                     letterSpacing: -0.3;
                     bold: true;

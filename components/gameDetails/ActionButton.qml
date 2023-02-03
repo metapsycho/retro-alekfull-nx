@@ -9,7 +9,7 @@ Item {
 
         color: collectionData.getColor(currentShortName);
         opacity: theme.current.bgOpacity;
-        radius: parent.height * .05;
+        radius: parent.height * .1;
         width: parent.width;
         height: parent.height;
         visible: false;

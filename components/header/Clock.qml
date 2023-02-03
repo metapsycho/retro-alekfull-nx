@@ -42,6 +42,7 @@ Item {
         anchors.verticalCenter: parent.verticalCenter;
 
         font {
+            family: sansFont.name;
             pixelSize: parent.height * .33;
             letterSpacing: -0.3;
             bold: true;

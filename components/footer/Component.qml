@@ -9,7 +9,8 @@ Rectangle {
 
     signal footerButtonClicked(string sigValue);
 
-    height: root.height * .115 * theme.fontScale;
+    //height: root.height * .115 * theme.fontScale;
+    height: root.height * .090 * theme.fontScale;
     color: theme.current.bgColor;
 
     anchors {
@@ -74,6 +75,7 @@ Rectangle {
         }
 
         font {
+            family: sansFont.name;
             pixelSize: parent.height * .33;
             letterSpacing: -0.3;
             bold: true;

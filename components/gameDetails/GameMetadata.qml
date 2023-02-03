@@ -2,19 +2,7 @@ import QtQuick 2.15
 import QtGraphicalEffects 1.12
 
 Item {
-    property double pixelSize;
-
-    property double actionButtonHeight: {
-        return Math.min(
-            actionButtons.height * .85,
-            root.height * 0.1,
-        );
-    }
-
-    property var metadataSpacing: {
-        if (title.lineCount > 1 && metadataText.length > 3) return 3;
-        return 8;
-    }
+    property double textSize: root.height * 0.055 * theme.fontScale;
 
     property var metadataText: {
         const texts = [
@@ -26,12 +14,6 @@ Item {
         ];
         return texts.filter(v => { return v !== null })
             .filter(v => { return v !== '' });
-    }
-
-    property string favoriteGlyph: {
-        if (currentGame === null) return '';
-        if (currentGame.favorite) return glyphs.favorite;
-        return glyphs.unfavorite;
     }
 
     property string titleText: {
@@ -48,9 +30,12 @@ Item {
         text: titleText;
         color: theme.current.detailsColor;
         elide: Text.ElideRight;
+        verticalAlignment: Text.AlignVCenter;
+        horizontalAlignment: Text.AlignLeft;
 
         font {
-            pixelSize: pixelSize;
+            family: serifFont.name;
+            pixelSize: textSize;
             letterSpacing: -0.35;
             bold: true;
         }
@@ -58,18 +43,42 @@ Item {
         anchors {
             left: parent.left;
             top: parent.top;
+            bottomMargin: 10;
+        }
+    }
+
+    Text {
+        id: gameRating;
+
+        height: root.height * 0.055 * theme.current.fontScale * .6;
+        anchors {
+            left: parent.left;
+            right: parent.right;
+            top: title.bottom;
+        }
+
+        text: gameData.ratingText;
+        color: theme.current.detailsColor;
+        opacity: 0.5;
+        
+        verticalAlignment: Text.AlignVCenter;
+        horizontalAlignment: Text.AlignLeft;
+
+        font {
+            family: glyphs.name;
+            pixelSize: textSize * .4;
         }
     }
 
     Column {
         id: metadata;
 
-        spacing: metadataSpacing;
+        spacing: 3;
         width: parent.width;
 
         anchors {
-            top: title.bottom;
-            topMargin: 8;
+            top: gameRating.bottom;
+            topMargin: 3;
         }
 
         Repeater {
@@ -82,58 +91,14 @@ Item {
                 width: parent.width;
                 elide: Text.ElideRight
                 maximumLineCount: 1;
+                verticalAlignment: Text.AlignVCenter;
+                horizontalAlignment: Text.AlignLeft;
 
                 font {
-                    pixelSize: pixelSize * .75;
+                    family: sansFont.name;
+                    pixelSize: textSize * .4;
                     letterSpacing: -0.35;
                     bold: true;
-                }
-            }
-        }
-    }
-
-    Row {
-        id: actionButtons;
-
-        spacing: parent.width * .075;
-        width: parent.width;
-
-        anchors {
-            top: metadata.bottom;
-            topMargin: pixelSize;
-            bottom: parent.bottom;
-        }
-
-        ActionButton {
-            id: playButton;
-
-            glyph: glyphs.play;
-            width: parent.width / 2;
-            height: actionButtonHeight;
-            anchors.verticalCenter: parent.verticalCenter;
-
-            MouseArea {
-                anchors.fill: parent;
-
-                onClicked: {
-                    detailsButtonClicked('play');
-                }
-            }
-        }
-
-        ActionButton {
-            id: favoriteButton;
-
-            glyph: favoriteGlyph;
-            width: parent.width / 2;
-            height: actionButtonHeight;
-            anchors.verticalCenter: parent.verticalCenter;
-
-            MouseArea {
-                anchors.fill: parent;
-
-                onClicked: {
-                    detailsButtonClicked('favorite');
                 }
             }
         }

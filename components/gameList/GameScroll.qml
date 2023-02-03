@@ -5,11 +5,12 @@ import '../media' as Media
 Item {
     property alias video: gameListVideo;
     property alias gamesListView: gamesListView;
-    property var sortingFont: global.fonts.sans;
+    property var sortingFont: sansFont.name;
     property alias letter: skipLetter.letter;
 
     property double itemHeight: {
-        return gamesListView.height * .12 * theme.fontScale;
+        //return gamesListView.height * .12 * theme.fontScale;
+        return gamesListView.height * .09 * theme.fontScale;
     }
 
     property string imgSrc: {
@@ -19,7 +20,7 @@ Item {
 
     property var sortingText: {
         if (sortKey === 'release') {
-            sortingFont = global.fonts.sans;
+            sortingFont = sansFont.name;
             return gameData.releaseDateText;
         }
 
@@ -28,7 +29,7 @@ Item {
             return gameData.ratingText;
         }
 
-        sortingFont = global.fonts.sans;
+        sortingFont = sansFont.name;
         return gameData.lastPlayedText;
     }
 
@@ -57,6 +58,7 @@ Item {
         opacity: 0.5;
 
         font {
+            family: sansFont.name;
             pixelSize: parent.height * .065;
             letterSpacing: -0.3;
             bold: true;
@@ -68,7 +70,7 @@ Item {
 
         model: currentGameList;
         delegate: lvGameDelegate;
-        width: (parent.width / 2) - 20; // 20 is left margin
+        width: (parent.width / 2) - 20 - 8 - 4; // 20 is left margin
         height: parent.height - 24;
         highlightMoveDuration: 0;
         preferredHighlightBegin: itemHeight - 12; // height of an item minus top margin
@@ -93,6 +95,31 @@ Item {
 
         onCurrentIndexChanged: {
             gameListVideo.switchVideo();
+        }
+    }
+
+    Rectangle {
+        id: listProgressBar;
+        width: 4;
+        height: parent.height * 0.98;
+        visible: (itemHeight * currentGameList.count) > height;
+        anchors {
+            left: gamesListView.right;
+            leftMargin: 2 + 4;
+            verticalCenter: parent.verticalCenter;
+        }
+        color: theme.current.dividerColor;
+
+        Rectangle {
+            height: ((parent.height / itemHeight) / currentGameList.count) * parent.height;
+            width: 8;
+            anchors {
+                horizontalCenter: parent.horizontalCenter
+                top: parent.top;
+                topMargin: (parent.height - height) * (gamesListView.currentIndex / (currentGameList.count - 1));
+            }
+            color: collectionData.getColor(currentShortName);
+            opacity: theme.current.bgOpacity * 0.7;
         }
     }
 

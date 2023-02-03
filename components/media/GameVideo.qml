@@ -5,6 +5,7 @@ import QtGraphicalEffects 1.12
 Item {
     property string settingKey: '';
     property string validView: '';
+    property bool quickPlay: false;
     signal videoToggled(bool videoPlaying);
 
     function switchVideo() {
@@ -23,7 +24,8 @@ Item {
     }
 
     function quickVideoCallback(enabled) {
-        if (enabled) videoPlayerTimer.interval = 500;
+        if (quickPlay) videoPlayerTimer.interval = 0;
+        else if (enabled) videoPlayerTimer.interval = 500;
         else videoPlayerTimer.interval = 2000;
     }
 
@@ -32,15 +34,15 @@ Item {
         else videoPlayer.volume = .7;
     }
 
-    function dropShadowCallback(enabled) {
-        if (enabled) {
-            dropShadow.visible = true;
-            videoPlayer.visible = false;
-        } else {
-            videoPlayer.visible = true;
-            dropShadow.visible = false;
-        }
-    }
+//    function dropShadowCallback(enabled) {
+//        if (enabled) {
+//            dropShadow.visible = true;
+//            videoPlayer.visible = false;
+//        } else {
+//            videoPlayer.visible = true;
+//            dropShadow.visible = false;
+//        }
+//    }
 
     Component.onCompleted: {
         addCurrentViewCallback(function (currentView) {
@@ -59,8 +61,8 @@ Item {
         quietVideoCallback(settings.get('quietVideo'));
         settings.addCallback('quietVideo', quietVideoCallback);
 
-        dropShadowCallback(settings.get('dropShadow'));
-        settings.addCallback('dropShadow', dropShadowCallback);
+        //dropShadowCallback(settings.get('dropShadow'));
+        //settings.addCallback('dropShadow', dropShadowCallback);
     }
 
     Connections {
@@ -98,7 +100,7 @@ Item {
     Video {
         id: videoPlayer;
 
-        visible: false;
+        visible: true;
         volume: 0.7;
         source: currentGame.assets.video;
         autoPlay: false;
@@ -109,16 +111,16 @@ Item {
         fillMode: VideoOutput.PreserveAspectFit;
     }
 
-    DropShadow {
-        id: dropShadow;
-
-        source: videoPlayer;
-        anchors.fill: videoPlayer;
-        color: theme.current.dropShadowColor;
-        verticalOffset: 5;
-        radius: 20;
-        samples: 41;
-        cached: true;
-        visible: true;
-    }
+//    DropShadow {
+//        id: dropShadow;
+//
+//        source: videoPlayer;
+//        anchors.fill: videoPlayer;
+//        color: theme.current.dropShadowColor;
+//        verticalOffset: 5;
+//        radius: 20;
+//        samples: 41;
+//        cached: true;
+//        visible: true;
+//    }
 }

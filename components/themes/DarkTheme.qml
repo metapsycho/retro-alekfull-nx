@@ -2,11 +2,12 @@ import QtQuick 2.15
 
 Item {
     // collection list
-    property string titleColor: '#cccccc';
+    property string titleColor: '#000000';
     property double bgOpacity: 0.7;
 
     // shared
     property string bgColor: '#111111';
+    property string bgColorSecondary: '#262626';
     property string dividerColor: '#20ffffff';
     property string focusTextColor: '#cccccc';
     property string blurTextColor: '#555555';
@@ -14,6 +15,7 @@ Item {
 
     // details
     property string detailsColor: '#999999';
+    property string detailsBlurColor: '#555555';
 
     // settings
     property string highlightColor: '#333333';

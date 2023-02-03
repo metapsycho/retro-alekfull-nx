@@ -24,6 +24,7 @@ Item {
             opacity: theme.current.bgOpacity;
 
             font {
+                family: sansFont.name;
                 pixelSize: pixelSize;
                 letterSpacing: -0.1;
                 bold: true;
