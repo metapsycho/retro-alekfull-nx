@@ -163,7 +163,7 @@ Item {
 
                 anchors {
                     centerIn: parent;
-                    verticalCenterOffset: root.height + height * .5;
+                    horizontalCenterOffset: root.width + width * .5;
                 }
 
                 AllDetails {
@@ -273,12 +273,12 @@ Item {
         State {
             name: 'Visible';
             PropertyChanges { target: gameDetails; visible: true }
-            PropertyChanges { target: allDetailsPannel.anchors; verticalCenterOffset: 0 }
+            PropertyChanges { target: allDetailsPannel.anchors; horizontalCenterOffset: 0 }
         },
         State {
             name: 'Invisible';
             PropertyChanges { target: gameDetails; visible: false }
-            PropertyChanges { target: allDetailsPannel.anchors; verticalCenterOffset: root.height + allDetailsPannel.height * .5; }
+            PropertyChanges { target: allDetailsPannel.anchors; horizontalCenterOffset: root.width + allDetailsPannel.width * .5; }
         }
     ]
 
@@ -289,7 +289,7 @@ Item {
             SequentialAnimation {
                 NumberAnimation {
                     target: allDetailsPannel.anchors;
-                    property: 'verticalCenterOffset';
+                    property: 'horizontalCenterOffset';
                     duration: 200;
                     easing.type: Easing.OutCubic;
                 }
@@ -311,7 +311,7 @@ Item {
                 }
                 NumberAnimation {
                     target: allDetailsPannel.anchors;
-                    property: 'verticalCenterOffset';
+                    property: 'horizontalCenterOffset';
                     duration: 200;
                     easing.type: Easing.OutCubic;
                 }
